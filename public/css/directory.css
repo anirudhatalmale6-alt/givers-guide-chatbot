@@ -1,0 +1,500 @@
+/* Givers' Guide Resource Directory Styles */
+
+.gg-directory {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* Search */
+.gg-directory-search {
+    margin-bottom: 24px;
+}
+
+.gg-search-box {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.gg-search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: #9355ff;
+    pointer-events: none;
+}
+
+.gg-search-input {
+    width: 100%;
+    padding: 14px 16px 14px 48px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.gg-search-input:focus {
+    border-color: #9355ff;
+    box-shadow: 0 0 0 4px rgba(147, 85, 255, 0.1);
+}
+
+/* Filters */
+.gg-directory-filters {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.gg-filter-group {
+    flex: 1;
+    min-width: 180px;
+}
+
+.gg-filter-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.gg-filter-select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    appearance: auto;
+}
+
+.gg-filter-select:focus {
+    border-color: #9355ff;
+}
+
+.gg-filter-reset {
+    padding: 10px 20px;
+    background: transparent;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.gg-filter-reset:hover {
+    border-color: #f16e43;
+    color: #f16e43;
+}
+
+/* Results Info */
+.gg-results-info {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 16px;
+    padding: 0 4px;
+}
+
+.gg-results-info strong {
+    color: #1a1a1a;
+}
+
+/* Resource Cards */
+.gg-directory-results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+}
+
+.gg-resource-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 20px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.gg-resource-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.gg-resource-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.gg-resource-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a1a1a;
+    line-height: 1.3;
+    margin: 0;
+}
+
+.gg-resource-region {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.gg-region-usa { background: #ede9fe; color: #7c3aed; }
+.gg-region-israel { background: #dbeafe; color: #2563eb; }
+.gg-region-england { background: #fce7f3; color: #db2777; }
+
+.gg-resource-type {
+    font-size: 13px;
+    color: #9355ff;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.gg-resource-category {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    background: #f3f4f6;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.gg-resource-description {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.gg-resource-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 12px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.gg-detail-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: #4b5563;
+}
+
+.gg-detail-row svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: #9355ff;
+    margin-top: 1px;
+}
+
+.gg-detail-row a {
+    color: #9355ff;
+    text-decoration: none;
+}
+
+.gg-detail-row a:hover {
+    text-decoration: underline;
+}
+
+/* Report Button */
+.gg-report-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    color: #d1d5db;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+}
+
+.gg-report-btn:hover {
+    color: #f16e43;
+    background: #fef2f2;
+}
+
+.gg-report-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Loading */
+.gg-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: #6b7280;
+}
+
+.gg-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid #e5e7eb;
+    border-top-color: #9355ff;
+    border-radius: 50%;
+    animation: gg-spin 0.8s linear infinite;
+    margin: 0 auto 12px;
+}
+
+@keyframes gg-spin {
+    to { transform: rotate(360deg); }
+}
+
+.gg-no-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: #6b7280;
+}
+
+.gg-no-results svg {
+    width: 48px;
+    height: 48px;
+    color: #d1d5db;
+    margin-bottom: 12px;
+}
+
+/* Pagination */
+.gg-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+}
+
+.gg-page-btn {
+    min-width: 40px;
+    height: 40px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #fff;
+    color: #4b5563;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    padding: 0 12px;
+}
+
+.gg-page-btn:hover {
+    border-color: #9355ff;
+    color: #9355ff;
+}
+
+.gg-page-btn.active {
+    background: #9355ff;
+    border-color: #9355ff;
+    color: #fff;
+}
+
+.gg-page-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Modal */
+.gg-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', -apple-system, sans-serif;
+}
+
+.gg-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.gg-modal-content {
+    position: relative;
+    background: #fff;
+    border-radius: 16px;
+    width: 480px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.gg-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.gg-modal-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.gg-modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #6b7280;
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+}
+
+.gg-form-group {
+    margin-bottom: 16px;
+}
+
+.gg-form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+.gg-form-group select,
+.gg-form-group input,
+.gg-form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.gg-form-group select:focus,
+.gg-form-group input:focus,
+.gg-form-group textarea:focus {
+    border-color: #9355ff;
+}
+
+.gg-form-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.gg-btn-cancel {
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #6b7280;
+    cursor: pointer;
+}
+
+.gg-btn-submit {
+    padding: 10px 24px;
+    background: #9355ff;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.gg-btn-submit:hover { background: #7a3de8; }
+
+.gg-report-success {
+    text-align: center;
+    padding: 20px;
+}
+
+.gg-report-success svg {
+    width: 48px;
+    height: 48px;
+    color: #10b981;
+    margin-bottom: 12px;
+}
+
+.gg-report-success h3 {
+    font-size: 20px;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.gg-report-success p {
+    color: #6b7280;
+    margin-bottom: 16px;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .gg-directory-results {
+        grid-template-columns: 1fr;
+    }
+
+    .gg-directory-filters {
+        flex-direction: column;
+    }
+
+    .gg-filter-group {
+        min-width: 100%;
+    }
+}
