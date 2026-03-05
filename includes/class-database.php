@@ -174,7 +174,36 @@ class GG_Database {
             $sql = $wpdb->prepare($sql, $params);
         }
 
-        return $wpdb->get_results($sql);
+        $results = $wpdb->get_results($sql);
+
+        // Fallback to LIKE search if FULLTEXT returns nothing and we have a query
+        if (empty($results) && !empty($query) && empty($category)) {
+            $like = '%' . $wpdb->esc_like($query) . '%';
+            $fb_where = ['r.is_active = 1'];
+            $fb_params = [];
+
+            $fb_where[] = "(r.name LIKE %s OR r.type LIKE %s OR r.description LIKE %s OR r.location LIKE %s OR r.location_served LIKE %s OR c.name LIKE %s)";
+            $fb_params = [$like, $like, $like, $like, $like, $like];
+
+            if (!empty($region)) {
+                $fb_where[] = "r.region = %s";
+                $fb_params[] = $region;
+            }
+
+            $fb_params[] = $limit;
+            $fb_params[] = $offset;
+
+            $fb_sql = "SELECT r.*, c.name as category_name, c.region as category_region
+                       FROM {$table} r
+                       LEFT JOIN {$cat_table} c ON r.category_id = c.id
+                       WHERE " . implode(' AND ', $fb_where) . "
+                       ORDER BY r.name ASC
+                       LIMIT %d OFFSET %d";
+
+            $results = $wpdb->get_results($wpdb->prepare($fb_sql, $fb_params));
+        }
+
+        return $results;
     }
 
     public static function count_resources($query = '', $region = '', $category = '') {
