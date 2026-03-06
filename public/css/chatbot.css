@@ -314,18 +314,18 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: var(--gg-primary);
-    color: var(--gg-white);
-    border: none;
+    background: var(--gg-white);
+    color: var(--gg-primary);
+    border: 2px solid var(--gg-primary);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    transition: background 0.2s;
+    transition: background 0.2s, color 0.2s;
 }
 
-.gg-chatbot-send:hover { background: var(--gg-primary-dark); }
+.gg-chatbot-send:hover { background: var(--gg-primary); color: var(--gg-white); }
 .gg-chatbot-send svg { width: 18px; height: 18px; }
 
 .gg-chatbot-powered {
