@@ -326,7 +326,7 @@
 }
 
 .gg-chatbot-send:hover { background: var(--gg-primary); color: var(--gg-white); }
-.gg-chatbot-send svg { width: 18px; height: 18px; }
+.gg-chatbot-send svg { width: 22px; min-width: 22px; height: 22px; display: block; margin-left: 2px; flex-shrink: 0; }
 
 .gg-chatbot-powered {
     text-align: center;
