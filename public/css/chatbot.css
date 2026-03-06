@@ -377,18 +377,48 @@
 /* Mobile */
 @media (max-width: 480px) {
     .gg-chatbot-window {
-        bottom: 0;
-        right: 0;
-        width: 100vw;
-        height: 100vh;
-        max-height: 100vh;
-        border-radius: 0;
+        bottom: 80px;
+        right: 8px;
+        width: calc(100vw - 16px);
+        height: 420px;
+        max-height: calc(100vh - 100px);
+        border-radius: 12px;
     }
 
     .gg-chatbot-toggle {
         bottom: 16px;
         right: 16px;
-        width: 54px;
-        height: 54px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .gg-chatbot-header {
+        padding: 10px 14px;
+    }
+
+    .gg-chatbot-messages {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .gg-chatbot-input-area {
+        padding: 8px 10px;
+    }
+
+    .gg-message-bubble {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .gg-resource-card {
+        padding: 10px;
+    }
+
+    .gg-resource-card h4 {
+        font-size: 13px;
+    }
+
+    .gg-resource-card p {
+        font-size: 11px;
     }
 }
