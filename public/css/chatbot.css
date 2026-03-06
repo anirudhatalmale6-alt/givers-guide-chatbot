@@ -421,4 +421,20 @@
     .gg-resource-card p {
         font-size: 11px;
     }
+
+    .gg-chatbot-send {
+        width: 34px;
+        height: 34px;
+    }
+
+    .gg-chatbot-send svg {
+        width: 16px;
+        min-width: 16px;
+        height: 16px;
+    }
+
+    .gg-chatbot-input {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
 }
