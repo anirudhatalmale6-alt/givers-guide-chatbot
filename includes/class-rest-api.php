@@ -264,4 +264,5 @@ class GG_REST_API {
             'per_page' => $per_page,
         ]);
     }
+
 }

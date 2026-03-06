@@ -103,10 +103,21 @@ RULES:
         ]);
 
         if (is_wp_error($response)) {
+            // Log error for debugging
+            error_log('GG Chatbot OpenAI WP Error: ' . $response->get_error_message());
             return self::smart_fallback($message, $session_id, $history);
         }
 
-        $body = json_decode(wp_remote_retrieve_body($response), true);
+        $status_code = wp_remote_retrieve_response_code($response);
+        $body_raw = wp_remote_retrieve_body($response);
+        $body = json_decode($body_raw, true);
+
+        // Handle OpenAI API errors
+        if ($status_code !== 200 || isset($body['error'])) {
+            $err = isset($body['error']['message']) ? $body['error']['message'] : "HTTP {$status_code}";
+            error_log('GG Chatbot OpenAI API Error: ' . $err);
+            return self::smart_fallback($message, $session_id, $history);
+        }
 
         if (isset($body['choices'][0]['message']['content'])) {
             $reply = $body['choices'][0]['message']['content'];
@@ -124,6 +135,7 @@ RULES:
             ];
         }
 
+        error_log('GG Chatbot: Unexpected OpenAI response format');
         return self::smart_fallback($message, $session_id, $history);
     }
 
