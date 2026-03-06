@@ -455,24 +455,30 @@ RULES:
     private static function multi_search($search_terms) {
         $all = [];
 
-        // Full text search
+        if (empty(trim($search_terms))) {
+            return [];
+        }
+
+        // Full text search with cleaned terms
         $results = GG_Database::search_resources($search_terms, '', '', 10);
         foreach ($results as $r) {
             $all[$r->id] = $r;
         }
 
-        // Search individual important words
-        $words = preg_split('/\s+/', $search_terms);
-        foreach ($words as $w) {
-            if (strlen($w) > 3) {
-                $results = GG_Database::search_resources($w, '', '', 5);
-                foreach ($results as $r) {
-                    if (!isset($all[$r->id])) {
-                        $all[$r->id] = $r;
+        // If full phrase didn't get enough, search key individual words
+        if (count($all) < 5) {
+            $words = preg_split('/\s+/', $search_terms);
+            foreach ($words as $w) {
+                if (strlen($w) > 3) {
+                    $results = GG_Database::search_resources($w, '', '', 5);
+                    foreach ($results as $r) {
+                        if (!isset($all[$r->id])) {
+                            $all[$r->id] = $r;
+                        }
                     }
                 }
+                if (count($all) >= 10) break;
             }
-            if (count($all) >= 15) break;
         }
 
         return array_values($all);
@@ -523,17 +529,37 @@ RULES:
     }
 
     /**
-     * Extract search terms from conversation
+     * Extract meaningful search terms from conversation (filters stop words)
      */
     private static function extract_search_terms($message, $history) {
-        $terms = $message;
-        // Add relevant terms from history
+        $all_text = $message;
         foreach ($history as $h) {
             if ($h['role'] === 'user') {
-                $terms .= ' ' . $h['content'];
+                $all_text .= ' ' . $h['content'];
             }
         }
-        return $terms;
+
+        // Filter out stop words to get meaningful search terms
+        $stop_words = ['i', 'a', 'an', 'the', 'in', 'for', 'my', 'me', 'to', 'and', 'or',
+            'is', 'it', 'of', 'need', 'want', 'looking', 'find', 'help', 'can', 'you',
+            'do', 'have', 'with', 'are', 'there', 'any', 'some', 'please', 'thanks',
+            'thank', 'hi', 'hello', 'hey', 'im', 'that', 'this', 'what', 'where',
+            'who', 'how', 'get', 'has', 'had', 'was', 'were', 'be', 'been', 'being',
+            'but', 'not', 'so', 'if', 'at', 'by', 'on', 'from', 'up', 'about', 'into',
+            'its', 'your', 'our', 'their', 'we', 'they', 'he', 'she', 'his', 'her',
+            'would', 'could', 'should', 'will', 'just', 'also', 'like', 'know', 'see',
+            'look', 'very', 'really', 'much', 'more', 'most', 'year', 'old', 'years'];
+
+        $words = preg_split('/[\s,]+/', strtolower($all_text));
+        $meaningful = [];
+        foreach ($words as $w) {
+            $w = preg_replace('/[^a-z0-9-]/', '', $w);
+            if (strlen($w) > 2 && !in_array($w, $stop_words)) {
+                $meaningful[] = $w;
+            }
+        }
+
+        return implode(' ', array_unique($meaningful));
     }
 
     /**

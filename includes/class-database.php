@@ -140,12 +140,18 @@ class GG_Database {
         $table = $wpdb->prefix . GG_TABLE_RESOURCES;
         $cat_table = $wpdb->prefix . GG_TABLE_CATEGORIES;
 
+        $select = "r.*, c.name as category_name, c.region as category_region";
         $where = ['r.is_active = 1'];
         $params = [];
+        $order = 'r.name ASC';
 
         if (!empty($query)) {
+            // Add relevance score and order by it
+            $select .= ", MATCH(r.name, r.type, r.description, r.location, r.location_served, r.notes) AGAINST(%s IN NATURAL LANGUAGE MODE) AS relevance";
+            $params[] = $query;
             $where[] = "MATCH(r.name, r.type, r.description, r.location, r.location_served, r.notes) AGAINST(%s IN NATURAL LANGUAGE MODE)";
             $params[] = $query;
+            $order = 'relevance DESC';
         }
 
         if (!empty($region)) {
@@ -163,11 +169,11 @@ class GG_Database {
         $params[] = $limit;
         $params[] = $offset;
 
-        $sql = "SELECT r.*, c.name as category_name, c.region as category_region
+        $sql = "SELECT {$select}
                 FROM {$table} r
                 LEFT JOIN {$cat_table} c ON r.category_id = c.id
                 WHERE {$where_sql}
-                ORDER BY r.name ASC
+                ORDER BY {$order}
                 LIMIT %d OFFSET %d";
 
         if (!empty($params)) {
