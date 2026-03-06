@@ -27,15 +27,26 @@ class GG_Chatbot {
      * AI-powered response using OpenAI
      */
     private static function ai_response($message, $session_id, $history, $api_key) {
-        // Extract search terms from the full conversation
-        $search_terms = self::extract_search_terms($message, $history);
+        $msg_lower = strtolower(trim($message));
 
-        // Search with multiple strategies
-        $resources = self::multi_search($search_terms);
-        $apps = GG_Database::search_apps($message, '', 3);
+        // Don't search the database for casual/greeting messages
+        $is_casual = self::is_casual_message($msg_lower);
 
-        // Build context from search results
-        $context = self::build_context($resources, $apps);
+        $resources = [];
+        $apps = [];
+        $context = 'No search performed — user is making casual conversation.';
+
+        if (!$is_casual) {
+            // Extract search terms from the full conversation
+            $search_terms = self::extract_search_terms($message, $history);
+
+            // Search with multiple strategies
+            $resources = self::multi_search($search_terms);
+            $apps = GG_Database::search_apps($message, '', 3);
+
+            // Build context from search results
+            $context = self::build_context($resources, $apps);
+        }
 
         // Get available categories for context
         $categories = GG_Database::get_categories();
@@ -73,7 +84,9 @@ RULES:
 - Only recommend resources from the database results above
 - Never make up resources or contact info
 - If no good matches, suggest browsing the directory or trying different terms
-- Be honest when results don't perfectly match";
+- Be honest when results don't perfectly match
+- For greetings (hi, hello, etc.) and casual chat, respond warmly and ask how you can help — do NOT list resources
+- Only show resources when the user has expressed a specific need";
 
         $messages = [
             ['role' => 'system', 'content' => $system_prompt],
@@ -531,6 +544,39 @@ RULES:
         foreach ($greetings as $g) {
             if ($msg === $g || strpos($msg, $g) === 0) return true;
         }
+        return false;
+    }
+
+    /**
+     * Check if message is casual/conversational (no resource search needed)
+     */
+    private static function is_casual_message($msg) {
+        // Greetings
+        if (self::is_greeting($msg)) return true;
+
+        // Short casual phrases
+        $casual = ['thanks', 'thank you', 'ok', 'okay', 'cool', 'great', 'bye', 'goodbye',
+                    'good bye', 'see you', 'how are you', 'what can you do', 'who are you',
+                    'what is this', 'yes', 'no', 'sure', 'alright', 'got it', 'nice',
+                    'awesome', 'perfect', 'wonderful', 'amazing'];
+        foreach ($casual as $c) {
+            if ($msg === $c) return true;
+        }
+
+        // Very short messages (1-2 words) that aren't service keywords
+        $word_count = str_word_count($msg);
+        if ($word_count <= 2) {
+            $service_words = ['therapy', 'therapist', 'counseling', 'counselor', 'addiction',
+                'abuse', 'autism', 'cancer', 'legal', 'lawyer', 'housing', 'food', 'job',
+                'insurance', 'doctor', 'medical', 'grief', 'divorce', 'school', 'tutor',
+                'depression', 'anxiety', 'mental', 'disability', 'senior', 'pregnancy',
+                'rehab', 'recovery', 'support', 'help me', 'resources'];
+            foreach ($service_words as $sw) {
+                if (strpos($msg, $sw) !== false) return false;
+            }
+            return true;
+        }
+
         return false;
     }
 
