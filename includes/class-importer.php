@@ -41,8 +41,8 @@ class GG_Importer {
             if (stripos($first_col, "Givers' Guide") !== false) continue;
             if (stripos($first_col, 'INSTRUCTIONS ON') !== false) continue;
 
-            // Detect header row
-            if (strtoupper($first_col) === 'NAME' && (strtoupper($second_col) === 'TYPE' || strtoupper($second_col) === 'DESCRIPTION')) {
+            // Detect header row (supports different column formats)
+            if (strtoupper($first_col) === 'NAME' && ($second_col !== '' || $row_num <= 5)) {
                 $header_found = true;
                 continue;
             }
