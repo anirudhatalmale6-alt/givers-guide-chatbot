@@ -43,7 +43,7 @@ class GG_Admin {
 
             foreach ($fields as $field) {
                 if (isset($_POST[$field])) {
-                    update_option($field, sanitize_text_field($_POST[$field]));
+                    update_option($field, sanitize_text_field(wp_unslash($_POST[$field])));
                 }
             }
 

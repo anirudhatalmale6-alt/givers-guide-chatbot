@@ -130,14 +130,20 @@ class GiversGuideChatbot {
             GG_VERSION,
             true
         );
-        wp_localize_script('gg-chatbot-script', 'ggChatbot', [
+        $bot_name = get_option('gg_bot_name', "Givers' Guide Assistant");
+        $welcome = get_option('gg_welcome_message', "Hi! I'm the Givers' Guide Assistant. I can help you find resources and services. What are you looking for today?");
+        // Clean up any over-escaped backslashes from wp_localize_script or magic quotes
+        while (strpos($bot_name, '\\') !== false) { $bot_name = stripslashes($bot_name); }
+        while (strpos($welcome, '\\') !== false) { $welcome = stripslashes($welcome); }
+        $chatbot_data = [
             'ajaxUrl' => rest_url('givers-guide/v1/'),
             'nonce' => wp_create_nonce('wp_rest'),
-            'botName' => get_option('gg_bot_name', "Givers' Guide Assistant"),
-            'welcomeMessage' => get_option('gg_welcome_message', "Hi! I'm the Givers' Guide Assistant. I can help you find resources and services. What are you looking for?"),
+            'botName' => $bot_name,
+            'welcomeMessage' => $welcome,
             'primaryColor' => get_option('gg_primary_color', '#9355ff'),
             'accentColor' => get_option('gg_accent_color', '#4bfada'),
-        ]);
+        ];
+        wp_add_inline_script('gg-chatbot-script', 'var ggChatbot = ' . wp_json_encode($chatbot_data) . ';', 'before');
         wp_localize_script('gg-directory-script', 'ggDirectory', [
             'ajaxUrl' => rest_url('givers-guide/v1/'),
             'nonce' => wp_create_nonce('wp_rest'),
