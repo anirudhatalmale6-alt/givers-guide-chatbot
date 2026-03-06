@@ -128,18 +128,29 @@
     display: inline-block;
 }
 
-.gg-chatbot-minimize {
+.gg-chatbot-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.gg-chatbot-header-btn {
     background: none;
     border: none;
     color: var(--gg-white);
     cursor: pointer;
-    padding: 4px;
+    padding: 6px;
     opacity: 0.8;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, background 0.2s;
+    border-radius: 6px;
 }
 
-.gg-chatbot-minimize:hover { opacity: 1; }
-.gg-chatbot-minimize svg { width: 20px; height: 20px; }
+.gg-chatbot-header-btn:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.gg-chatbot-header-btn svg { width: 18px; height: 18px; }
 
 /* Messages Area */
 .gg-chatbot-messages {

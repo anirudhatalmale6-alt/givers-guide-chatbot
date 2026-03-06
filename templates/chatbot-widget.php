@@ -24,9 +24,14 @@
                     <div class="gg-chatbot-status">Online</div>
                 </div>
             </div>
-            <button id="gg-chatbot-minimize" class="gg-chatbot-minimize" aria-label="Minimize chat">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </button>
+            <div class="gg-chatbot-header-actions">
+                <button id="gg-chatbot-refresh" class="gg-chatbot-header-btn" aria-label="New chat" title="New chat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                </button>
+                <button id="gg-chatbot-minimize" class="gg-chatbot-header-btn" aria-label="Minimize chat" title="Minimize">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </button>
+            </div>
         </div>
 
         <!-- Messages -->

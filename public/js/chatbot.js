@@ -18,6 +18,7 @@
     const form = document.getElementById('gg-chatbot-form');
     const input = document.getElementById('gg-chatbot-input');
     const minimize = document.getElementById('gg-chatbot-minimize');
+    const refresh = document.getElementById('gg-chatbot-refresh');
     const iconChat = toggle ? toggle.querySelector('.gg-icon-chat') : null;
     const iconClose = toggle ? toggle.querySelector('.gg-icon-close') : null;
     const botName = document.getElementById('gg-chatbot-name');
@@ -51,6 +52,21 @@
             window_.style.display = 'none';
             iconChat.style.display = 'block';
             iconClose.style.display = 'none';
+        });
+    }
+
+    // Refresh / New chat
+    if (refresh) {
+        refresh.addEventListener('click', function() {
+            // Clear messages
+            messages.innerHTML = '';
+            // Reset history and session
+            history = [];
+            sessionId = generateId();
+            localStorage.setItem('gg_session', sessionId);
+            // Show fresh welcome
+            showWelcome(messages);
+            if (input) input.focus();
         });
     }
 
